@@ -1,87 +1,93 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { auth } from './firebase';
- 
-const Login = () => {
-    const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-       
-    const onLogin = (e) => {
-        e.preventDefault();
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            navigate("/home")
-            console.log(user);
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
-        });
-       
-    }
- 
-    return(
-        <>
-            <main >        
-                <section>
-                    <div>                                            
-                        <p> FocusApp </p>                       
-                                                       
-                        <form>                                              
-                            <div>
-                                <label htmlFor="email-address">
-                                    Email address
-                                </label>
-                                <input
-                                    id="email-address"
-                                    name="email"
-                                    type="email"                                    
-                                    required                                                                                
-                                    placeholder="Email address"
-                                    onChange={(e)=>setEmail(e.target.value)}
-                                />
-                            </div>
+import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
-                            <div>
-                                <label htmlFor="password">
-                                    Password
-                                </label>
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"                                    
-                                    required                                                                                
-                                    placeholder="Password"
-                                    onChange={(e)=>setPassword(e.target.value)}
-                                />
-                            </div>
-                                                
-                            <div>
-                                <button                                    
-                                    onClick={onLogin}                                        
-                                >      
-                                    Login                                                                  
-                                </button>
-                            </div>                               
-                        </form>
-                       
-                        <p className="text-sm text-white text-center">
-                            No account yet? {' '}
-                            <NavLink to="/">
-                                Sign up
-                            </NavLink>
-                        </p>
-                                                   
-                    </div>
-                </section>
-            </main>
-        </>
-    )
+
+const Login = () => {
+  const navigate = useNavigate();
+
+  const [emailid, setEmailid] = useState('')
+  const [password, setPassword] = useState('')
+
+
+  async function handleSignup(e) {
+    e.preventDefault()
+
+
+    const req = {
+      email: emailid,
+      password: password
+    }
+   
+    try {
+      const response = await fetch(`${process.env.SSSSSSS}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(req),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        document.cookie = "userToken=" + data.success;
+        navigate('/home')
+      } else{
+        alert("Invalid Email and Password ")
+      }
+    } catch (error) {
+      console.error('Error occurred while authenticating', error);
+    }
+  }
+
+
+  return (
+    <div className="container-login bg-black flex  p-8 m-8 text-white border-white border-2  rounded-xl">
+      <div className="box ">
+        <div className="head">
+          <span className=''></span>
+          <div className='text-center py-6 text-xl font-bold '>Log In</div>
+          <span className=''></span>
+       
+        <div className="content">
+          <div className='form'>
+            <div className="m-5">
+              <input
+              className='bg-black p-2 hover:border-white hover:border-2  hover:rounded-xl'
+                type="email"
+                value={emailid}
+                onChange={(e) => setEmailid(e.target.value)}
+                name='email'
+                placeholder='Email ID'
+                spellCheck="false"
+                autoComplete='true' required />
+            </div>
+            <div className="m-5 ">
+              <input
+              className='bg-black p-2 hover:border-white hover:border-2  hover:rounded-xl'
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                name='password'
+                placeholder='Password' required />
+            </div>
+            <div className=" cursor-pointer text-center py-3 m-5 hover:bg-white hover:text-black  border-white border-2 rounded-2 rounded-xl" >
+              <input
+             className='cursor-pointer font-bold  '
+                type="submit"
+                value={"Login"}
+                onClick={handleSignup} />
+            </div>
+            <div className="flex m-5 justify-between font-bold ">
+              <input className='cursor-pointer' type="button" value="Sign Up" onClick={() => navigate('/signup')} />
+            
+              <input className='cursor-pointer submit' type="submit" value={"Need Help ?"} onClick={() => navigate('/forgot')} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+            
+  )
 }
- 
+
 export default Login

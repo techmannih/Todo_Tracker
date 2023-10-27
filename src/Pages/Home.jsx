@@ -25,20 +25,20 @@ function TodoList({ title, deleteTodoList }) {
   };
 
   return (
-    <div className="todoList d-flex">
-      <div className=" d-flex  p-1 title">
+    <div className="todoList bg-black">
+      <div className=" flex   justify-between p-1 title">
         
-        <div className="">
-      <h2 className='m-0  align-items-center p-1'>{title}</h2>
-      </div>
-      <div className="btn-title">
+        
+      <h2 className='m-0  align-items-center '>{title}</h2>
+    
+      
       {/* <button className="btnXX" onClick={newAddcard}>
         +
       </button> */}
-      <button className="btnXX" onClick={handleDeleteTodoList}>
+      <button className="btnXX m-0  p-1 text-xl" onClick={handleDeleteTodoList}>
         x
       </button>
-      </div>
+     
       </div>
 
       <div className=''>
@@ -96,19 +96,18 @@ function Sign() {
 
   return (
 
-    <div >
+    <div className='justify-center flex-wrap'>
 
-<h1 className='justify-content-center items-center '>Hello and Welcome to the home</h1>
-        {/* <Navbar/> */}
-        {/* <h1 className='justify-content-center'>Hello{location.state.id} and welcome to the home</h1> */}
-        <div className="d-flex justify-content-center">
+<h1 className='justify-center items-center text-white'>Hello and Welcome to the home</h1>
+        <div className=" justify-content-center">
                 <input
+                className='border-white bg-black p-2   border-2  text-white rounded-xl '
         type="text"
         id="addTodoListInput"
         value={addTodoListInputValue}
         onChange={(e) => setAddTodoListInputValue(e.target.value)}
       />
-      <button id="addTodoListButton" onClick={addTodoList}>
+      <button id="addTodoListButton" onClick={addTodoList} className='bg-black text-white'>
         Add Todo
       </button>
       </div>
@@ -116,9 +115,11 @@ function Sign() {
       <div id="root">
         {todoLists.map((title, index) => (
           <TodoList
+          className="whitespace-pre-line"
             key={index}
             title={title}
             deleteTodoList={() => deleteTodoList(index)}
+
           />
         ))}
       </div>
