@@ -28,17 +28,21 @@ const Signup = () => {
         body: JSON.stringify(req),
       });
     
-      const data = await response.json();
       if (response.ok) {
         navigate('/')
+        console.log("ee")
       } else {
         // Handle signup error based on the response
-        alert("error")
-       
+        // alert("error")
+
+        console.log("eeddd")
+
       }
     } catch (error) {
       console.error('Error occurred while making the signup request', error);
       // alert("jjj")
+
+      console.log("eeddddddwwww")
     }
    
   }
@@ -93,7 +97,7 @@ const Signup = () => {
             <div className="flex m-5 justify-between font-bold ">
               
               <input className='cursor-pointer' type="button" value="Login" onClick={() => navigate('/')} />
-
+               
               <input className='cursor-pointer submit' type="submit" value={"Need Help ?"} onClick={() => navigate('/forgot')} />
             </div>
           </div>

@@ -12,10 +12,10 @@ const ForgotPassword = () => {
             <a href="mailto:manishchaudharyttt@gmail.com">Manishchaudharyttt@gmail.com</a>
           </div>
           <div className="">
-            <a href="https://twitter.com/techmannih">Twiter ( Techmannih )</a>
+            <a href="https://twitter.com/techmannih">Twitter ( Techmannih )</a>
           </div>
           <div className="">
-            <a href="https://linkedin.com/in/tachmannih">Linked In ( Techmannih )</a>
+            <a href="https://linkedin.com/in/tachmannih">Linkedin ( Techmannih )</a>
           </div>
         </div>
         <div className="text-center py-3 m-5 hover:bg-white hover:text-black  border-white border-2 rounded-2 rounded-xl">
