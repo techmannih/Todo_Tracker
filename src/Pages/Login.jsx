@@ -19,7 +19,7 @@ const Login = () => {
     }
   //  
     try {
-      const response = await fetch(`${process.env.SSSSSSS}/login`, {
+      const response = await fetch(`${import.meta.env.REACT_APP_API_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,14 +27,17 @@ const Login = () => {
         body: JSON.stringify(req),
       });
       const data = await response.json();
+      console.log(data)
       if (response.ok) {
         document.cookie = "userToken=" + data.success;
         navigate('/home')
+        console.log("1")
       } else{
-        alert("Invalid Email and Password ")
-      }
+        alert("Please  Check Your Email and Password ")
+      }console.log("2")
     } catch (error) {
       console.error('Error occurred while authenticating', error);
+      console.log("3")
     }
   }
 

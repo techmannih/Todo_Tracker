@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import {useNavigate} from 'react-router-dom'
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 
 const Signup = () => {
   const navigate = useNavigate()
@@ -20,7 +20,7 @@ const Signup = () => {
     }
     
     try {
-      const response = await fetch(process.env.SSSSSSS+"/signup", {
+      const response = await fetch(`${import.meta.env.REACT_APP_API_URL}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ const Signup = () => {
         body: JSON.stringify(req),
       });
     
-
+      const data = await response.json();
       if (response.ok) {
         navigate('/')
       } else {
@@ -38,6 +38,7 @@ const Signup = () => {
       }
     } catch (error) {
       console.error('Error occurred while making the signup request', error);
+      // alert("jjj")
     }
    
   }
