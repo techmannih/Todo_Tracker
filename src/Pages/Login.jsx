@@ -43,6 +43,8 @@ const Login = () => {
 
 
   return (
+    
+    <div className=" h-screen flex items-center justify-center">
     <div className="container-login bg-black flex  p-8 m-8 text-white border-white border-2  rounded-xl">
       <div className="box ">
         <div className="head">
@@ -87,6 +89,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
     </div>
             
