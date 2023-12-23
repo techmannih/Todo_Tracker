@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Link } from "react-router-dom";
 const Login = () => {
+  const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const handleChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -28,8 +30,22 @@ const Login = () => {
         body: JSON.stringify(loginData),
       });
 
+      // Clear the form fields
+      setLoginData({
+        fullName: "",
+        email: "",
+        password: "",
+      });
       if (response.ok) {
         // Authentication successful, you can redirect or perform other actions
+        // Registration successful, display success message
+        setSuccessMessage("User Logged In  successfully!");
+
+        // Clear success message and navigate after 2 seconds
+        setTimeout(() => {
+          setSuccessMessage(null);
+          navigate("/home");
+        }, 1000);
         console.log("User authenticated successfully!");
       } else {
         // Authentication failed, handle errors
@@ -41,6 +57,10 @@ const Login = () => {
         ) {
           // Display an error message to the user indicating invalid credentials
           setError("Invalid email or password. Please try again.");
+          setTimeout(() => {
+            setError(null);
+            navigate("/");
+          }, 1000);
         } else {
           console.error("Authentication failed:", response.statusText);
         }
@@ -54,6 +74,9 @@ const Login = () => {
     <div className="h-screen flex items-center justify-center">
       <div className="container-login bg-black flex p-8 m-8 text-white border-white border-2 rounded-xl">
         <div className="box">
+        {successMessage && (
+              <div className="text-green-500 text-center p-2">{successMessage}</div>
+            )}
           <div className="head">
             <span className=""></span>
             <div className="text-center py-6 text-xl font-bold">Log In</div>
@@ -85,11 +108,11 @@ const Login = () => {
                   required
                 />
               </div>
-              <p className="text-red-500">{error}</p>
-              <div className="cursor-pointer text-center py-3 m-5 hover:bg-white hover:text-black  border-white border-2 rounded-2 rounded-xl">
+              <p className="text-red-500 m-2 p-2">{error}</p>
+              <div className=" text-center">
                 <button
                   type="submit"
-                  className="submit cursor-pointer font-bold"
+                  className="submit cursor-pointer text-center  hover:bg-white hover:text-black  border-white border-2 rounded-2 rounded-xl font-bold py-3 px-24"
                 >
                   Login
                 </button>

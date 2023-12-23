@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password: "",
   });
+  const [successMessage, setSuccessMessage] = useState(null);
+
+  const [errorExist, setErrorExist] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,13 +32,33 @@ const Signup = () => {
         body: JSON.stringify(formData),
       });
 
+      // Clear the form fields
+      setFormData({
+        fullName: "",
+        email: "",
+        password: "",
+      });
       if (response.ok) {
         // Registration successful, you can redirect or perform other actions
+
+        setSuccessMessage("User registered successfully!"); // Registration successful, display success message
+        // Clear success message and navigate after 2 seconds
+        setTimeout(() => {
+          setSuccessMessage(null);
+          navigate("/");
+        }, 1000);
         console.log("User registered successfully!");
-        console.log(formData)
+        console.log(formData);
       } else {
         // Registration failed, handle errors
         console.error("Registration failed:", response.statusText);
+        setErrorExist(
+          "Email is already in use. Please choose a different email."
+        );
+        setTimeout(() => {
+          setErrorExist(null);
+          navigate("/signup");
+        }, 1000);
       }
     } catch (error) {
       console.error("Error during registration:", error.message);
@@ -46,6 +70,9 @@ const Signup = () => {
       <div className="container-login bg-black flex p-8 m-8 text-white border-white border-2 rounded-2 rounded-xl">
         <div className="box">
           <div className="head">
+            {errorExist && (
+              <div className="text-red-500 text-center">{errorExist}</div>
+            )}
             <span className=""></span>
             <div className="text-center py-6 text-xl font-bold">Sign Up</div>
             <span className=""></span>
@@ -86,15 +113,18 @@ const Signup = () => {
                 />
               </div>
 
-              <div className="cursor-pointer text-center py-3 m-5 hover:bg-white hover:text-black  border-white border-2 rounded-2 rounded-xl">
+              <div className=" text-center">
                 <button
                   type="submit"
-                  className="submit cursor-pointer font-bold"
+                  className="submit cursor-pointer text-center  hover:bg-white hover:text-black  border-white border-2 rounded-2 rounded-xl  py-3 px-24 font-bold"
                 >
                   Sign Up
                 </button>
               </div>
             </form>
+            {successMessage && (
+              <div className="text-green-500 text-center">{successMessage}</div>
+            )}
             <div className="flex m-5 justify-between font-bold">
               <Link to="/">
                 {" "}
