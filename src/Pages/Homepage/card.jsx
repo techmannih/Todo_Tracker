@@ -1,11 +1,25 @@
-// card.jsx
 import React from "react";
-import "../Home.css"
-function Card({ text, deleteCard }) {
+import "../Home.css";
+
+function Card({ task, deleteCard }) {
+  console.log(task);
+
+  const handleDeleteCard = async () => {
+    deleteCard();
+  };
+
+  // Check if 'task' and 'task.tasks' are defined before accessing them
+  const tasksToShow = task.tasks.map((taskItem, index) => (
+    <p key={index} className="m-0">
+      {taskItem.taskName}
+    </p>
+  ));
+  // <p className="m-0">Default Task Name</p>;
+
   return (
     <div className="card">
-      <p className="m-0">{text}</p>
-      <button className="btnXX" onClick={deleteCard}>
+      {tasksToShow}
+      <button className="btnXX" onClick={handleDeleteCard}>
         X
       </button>
     </div>

@@ -1,23 +1,94 @@
-// todo.jsx
 import React, { useState } from "react";
 import Card from "./card";
-import "../Home.css"
+import "../Home.css";
 
-function TodoList({ title, deleteTodoList }) {
+function TodoList({ titleId, todolist, deleteTodoList }) {
   const [cardArray, setCardArray] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [inputError, setInputError] = useState("");
+  // console.log(todolist)
+  // console.log(titleId)
+  const addToDo = async (titleId) => {
+    try {
+      if (!inputValue.trim()) {
+        setInputError("Task name cannot be empty");
+        setTimeout(() => {
+          setInputError(null);
+          // navigate("/");
+        }, 1000);
+        console.error("Task name cannot be empty");
+        // Add code to display an error message to the user, e.g., setErrorMessage("Task name cannot be empty");
+        return;
+      }
+      const response = await fetch(
+        `http://localhost:8888/todolist/${titleId}/task`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            titleId: titleId,
+            tasks: [{ taskName: inputValue }],
+          }),
+        }
+      );
 
-  const addToDo = () => {
-    if (inputValue !== "") {
-      setCardArray([...cardArray, inputValue]);
-      setInputValue("");
+      // console.log(titleId);
+
+      if (response.ok) {
+        // const { todo, message } = await response.json();
+        const newTask = await response.json();
+        console.log(newTask);
+        setCardArray([...cardArray, { tasks: [{ taskName: inputValue }] }]);
+        setInputValue("");
+        // console.log("Todo:", todo);
+        // console.log("Message:", message);
+      } else {
+        // Handle non-successful response here, e.g., log an error message
+        const errorResponse = await response.json();
+        console.error(
+          "Error:",
+          response.status,
+          response.statusText,
+          errorResponse
+        );
+        console.log(
+          "Error:",
+          response.status,
+          response.statusText,
+          errorResponse
+        );
+      }
+    } catch (error) {
+      // Handle any other errors that might occur during the fetch or processing
+      console.error("An error occurred:", error);
+      console.log("An error occurred:", error);
     }
   };
 
-  const deleteCard = (index) => {
-    const updatedCardArray = [...cardArray];
-    updatedCardArray.splice(index, 1);
-    setCardArray(updatedCardArray);
+  const deleteCard = async (index) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8888/todolist/${titleId}/task/${index}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        const updatedCardArray = [...cardArray];
+        updatedCardArray.splice(index, 1);
+        setCardArray(updatedCardArray);
+      } else {
+        console.error("Error deleting card:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error deleting card:", error);
+    }
   };
 
   const handleDeleteTodoList = () => {
@@ -26,8 +97,13 @@ function TodoList({ title, deleteTodoList }) {
 
   return (
     <div className="todoList bg-black">
+      {inputError && (
+        <div className="text-red-500 text-center">{inputError}</div>
+      )}
       <div className=" flex justify-between p-1 title">
-        <h2 className="m-0 align-items-center whitespace-nowrap max-w-[200px]">{title}</h2>
+        <h2 className="m-0 align-items-center whitespace-nowrap max-w-[200px]">
+          {todolist}
+        </h2>
         <button
           className="btnXX m-0  p-1 text-xl"
           onClick={handleDeleteTodoList}
@@ -37,8 +113,12 @@ function TodoList({ title, deleteTodoList }) {
       </div>
 
       <div className="">
-        {cardArray.map((text, index) => (
-          <Card key={index} text={text} deleteCard={() => deleteCard(index)} />
+        {cardArray.map((task) => (
+          <Card
+            key={task._id}
+            task={task}
+            deleteCard={() => deleteCard(task._id)}
+          />
         ))}
       </div>
       <div className="py-1 taskInput">
@@ -47,7 +127,11 @@ function TodoList({ title, deleteTodoList }) {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <button className="btn-save" id="to-do-list-button" onClick={addToDo}>
+        <button
+          className="btn-save"
+          id="to-do-list-button"
+          onClick={() => addToDo(titleId)} // Pass titleId as an argument
+        >
           Add
         </button>
       </div>
