@@ -18,7 +18,6 @@ function todoList() {
       if (response.ok) {
         const todoListsData = await response.json();
         setTodoLists(todoListsData.todo);
-        console.log(todoListsData.todo);
         console.log("Fetch all todo lists:", todoListsData.todo);
       } else {
         console.error("Error fetching todo lists:", response.statusText);
@@ -42,8 +41,14 @@ function todoList() {
         });
 
         if (response.ok) {
-          const newTodoList = await response.json();
-          console.log(newTodoList.title);
+          const newTodoList = await  response.json()
+          for(var i = 0; i <= newTodoList; i++)
+           {
+               console.log(result.tasks[i].taskName);
+           }
+
+          console.log(newTodoList);
+          console.log(todoLists)
           setTodoLists([...todoLists, newTodoList.title]);
           setAddTodoListInputValue("");
         } else {

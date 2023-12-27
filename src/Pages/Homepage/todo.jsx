@@ -6,7 +6,7 @@ function TodoList({ titleId, todolist, deleteTodoList }) {
   const [cardArray, setCardArray] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [inputError, setInputError] = useState("");
-  // console.log(todolist)
+  console.log(todolist)
   // console.log(titleId)
   const addToDo = async (titleId) => {
     try {
