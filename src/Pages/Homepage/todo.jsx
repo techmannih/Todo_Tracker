@@ -6,7 +6,7 @@ function TodoList({ titleId, todolist, deleteTodoList }) {
   const [cardArray, setCardArray] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [inputError, setInputError] = useState("");
-  console.log(todolist)
+  // console.log(todolist);
   // console.log(titleId)
   const addToDo = async (titleId) => {
     try {
@@ -29,18 +29,22 @@ function TodoList({ titleId, todolist, deleteTodoList }) {
           },
           body: JSON.stringify({
             titleId: titleId,
-            tasks: [{ taskName: inputValue }],
+            todo: {
+              tasks: [{ taskName: inputValue }],
+            },
           }),
         }
       );
 
       // console.log(titleId);
-
+      console.log(inputValue);
+      console.log(setInputValue);
       if (response.ok) {
         // const { todo, message } = await response.json();
         const newTask = await response.json();
-        console.log(newTask);
-        setCardArray([...cardArray, { tasks: [{ taskName: inputValue }] }]);
+        console.log("newTask:", newTask);
+        console.log("tasks:", newTask.todo.tasks[0]);
+        setCardArray([...cardArray, newTask.todo.tasks[0]]);
         setInputValue("");
         // console.log("Todo:", todo);
         // console.log("Message:", message);
@@ -113,13 +117,14 @@ function TodoList({ titleId, todolist, deleteTodoList }) {
       </div>
 
       <div className="">
-        {cardArray.map((task) => (
-          <Card
-            key={task._id}
-            task={task}
-            deleteCard={() => deleteCard(task._id)}
-          />
-        ))}
+        {cardArray &&
+          cardArray.map((task) => (
+            <Card
+              key={task._id}
+              task={task}
+              deleteCard={() => deleteCard(task._id)}
+            />
+          ))}
       </div>
       <div className="py-1 taskInput">
         <input

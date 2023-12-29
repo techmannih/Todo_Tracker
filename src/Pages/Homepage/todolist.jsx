@@ -46,10 +46,9 @@ function todoList() {
            {
                console.log(result.tasks[i].taskName);
            }
-
-          console.log(newTodoList);
+          console.log(newTodoList.title);
           console.log(todoLists)
-          setTodoLists([...todoLists, newTodoList.title]);
+          setTodoLists([...todoLists, newTodoList]);
           setAddTodoListInputValue("");
         } else {
           console.error("Error adding todo list:", response.statusText);

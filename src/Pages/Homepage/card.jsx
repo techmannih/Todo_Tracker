@@ -9,11 +9,16 @@ function Card({ task, deleteCard }) {
   };
 
   // Check if 'task' and 'task.tasks' are defined before accessing them
-  const tasksToShow = task.tasks.map((taskItem, index) => (
-    <p key={index} className="m-0">
-      {taskItem.taskName}
-    </p>
-  ));
+  const tasksToShow = task && task.tasks ? (
+    task.tasks.map((taskItem, index) => (
+      <p key={index} className="m-0">
+        {taskItem}
+      </p>
+    ))
+  ) : (
+    <p className="m-0">Default Task Name</p>
+  );
+  
   // <p className="m-0">Default Task Name</p>;
 
   return (
