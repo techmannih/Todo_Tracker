@@ -74,11 +74,20 @@ function todoList() {
       console.error("Error deleting todo list:", error);
     }
   };
+  const logoutHandler = () => {
+    // Implement your logout logic here
+    // For example, clear any authentication tokens or session data
+    // and redirect the user to the login page
+    // This is a placeholder, replace it with your actual logout logic
+    localStorage.removeItem("token"); // or any other session storage
+    // Redirect to the login page or any other page you desire
+    window.location.href = "/";
+  };
   return (
     <div className="justify-center flex-wrap">
       <div className=" flex justify-center mt-4"> <button
           id="logoutButton"
-          // onClick={logoutHandler}
+          onClick={logoutHandler}
           className="ml-4 hover:bg-black hover:text-white hover:border-white border-2 bg-white text-black rounded p-2 font-bold"
         >
           Logout
