@@ -76,6 +76,14 @@ function todoList() {
   };
   return (
     <div className="justify-center flex-wrap">
+      <div className=" flex justify-center mt-4"> <button
+          id="logoutButton"
+          // onClick={logoutHandler}
+          className="ml-4 hover:bg-black hover:text-white hover:border-white border-2 bg-white text-black rounded p-2 font-bold"
+        >
+          Logout
+        </button></div>
+         
       <h1 className=" flex justify-center items-center text-white text-2xl p-8">
         Hello User!
       </h1>
@@ -90,7 +98,7 @@ function todoList() {
         <button
           id="addTodoListButton"
           onClick={addTodoListHandler}
-          className="hover:bg-black hover:text-white bg-white text-black rounded-r p-2 font-bold"
+          className="hover:bg-black hover:text-white bg-white text-black rounded-r p-2 font-bold hover:border-white border-2" 
         >
           Add Todo
         </button>
