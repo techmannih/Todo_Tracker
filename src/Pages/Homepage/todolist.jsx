@@ -5,6 +5,7 @@ import "../Home.css";
 function todoList() {
   const [todoLists, setTodoLists] = useState([]);
   const [addTodoListInputValue, setAddTodoListInputValue] = useState("");
+  console.log(todoLists);
 
   const fetchTodoLists = async () => {
     try {

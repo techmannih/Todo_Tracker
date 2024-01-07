@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Card from "./card";
 import "../Home.css";
 
-function TodoList({ titleId, todolist, deleteTodoList }) {
+function TodoList({ titleId, todoList, deleteTodoList }) {
   const [cardArray, setCardArray] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [inputError, setInputError] = useState("");
-  // console.log(todolist);
+  // console.log(todoList);
   // console.log(titleId)
   const addToDo = async (titleId) => {
     try {
@@ -106,7 +106,7 @@ function TodoList({ titleId, todolist, deleteTodoList }) {
       )}
       <div className=" flex justify-between p-1 title">
         <h2 className="m-0 align-items-center whitespace-nowrap max-w-[200px]">
-          {todolist}
+          {todoList.title}
         </h2>
         <button
           className="btnXX m-0  p-1 text-xl"
