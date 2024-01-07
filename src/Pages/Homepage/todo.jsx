@@ -42,9 +42,9 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
       if (response.ok) {
         // const { todo, message } = await response.json();
         const newTask = await response.json();
-        console.log("newTask:", newTask);
-        console.log("tasks:", newTask.todo.tasks[0]);
-        setCardArray([...cardArray, newTask.todo.tasks[0]]);
+        // console.log("newTask:", newTask);
+        console.log("tasks:", newTask.todo.tasks);
+        setCardArray([...cardArray, newTask.todo.tasks]);
         setInputValue("");
         // console.log("Todo:", todo);
         // console.log("Message:", message);
@@ -100,14 +100,14 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
   };
 
   return (
-    <div className="todoList bg-black">
+    <div className="todoList bg-black flex-wrap flex-col">
       {inputError && (
         <div className="text-red-500 text-center">{inputError}</div>
       )}
-      <div className=" flex justify-between p-1 title">
-        <h2 className="m-0 align-items-center whitespace-nowrap max-w-[200px]">
+      <div className=" flex justify-between p-1 title flex-wrap">
+        <span className="m-0 align-items-center whitespace-nowrap max-w-[200px]">
           {todoList.title}
-        </h2>
+        </span>
         <button
           className="btnXX m-0  p-1 text-xl"
           onClick={handleDeleteTodoList}
@@ -117,8 +117,7 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
       </div>
 
       <div className="">
-        {cardArray &&
-          cardArray.map((task) => (
+        {todoList.tasks.map((task) => (
             <Card
               key={task._id}
               task={task}
