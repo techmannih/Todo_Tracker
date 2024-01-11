@@ -70,13 +70,14 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
       console.log("An error occurred:", error);
     }
   };
-
-  const deleteCard = async (index) => {
+  const deleteCard = async (id) => {
     try {
+      console.log("Deleting card with ID:", id);
+
       const response = await fetch(
-        `http://localhost:8888/todolist/${titleId}/task/${index}`,
+        `http://localhost:8888/todolist/task/${id}`,
         {
-          method: "PUT",
+          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
@@ -84,11 +85,31 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
       );
 
       if (response.ok) {
-        const updatedCardArray = [...cardArray];
-        updatedCardArray.splice(index, 1);
-        setCardArray(updatedCardArray);
+        console.log("Card deleted successfully");
+
+        // Assuming you want to update the state after a successful deletion
+        // This depends on the structure of your todoList.tasks, modify accordingly
+        let updatedCardArray = [...todoList.tasks];
+        const deletedTaskIndex = updatedCardArray.findIndex(
+          (task) => task._id === id
+        );
+
+        if (deletedTaskIndex !== -1) {
+          updatedCardArray.splice(deletedTaskIndex, 1);
+          setCardArray(updatedCardArray);
+          console.log("Updated card array:", updatedCardArray);
+        } else {
+          console.error(
+            "Error updating card array: Task not found in the array"
+          );
+        }
       } else {
-        console.error("Error deleting card:", response.statusText);
+        console.error(
+          "Error deleting card. Status:",
+          response.status,
+          "Message:",
+          response.statusText
+        );
       }
     } catch (error) {
       console.error("Error deleting card:", error);
@@ -118,12 +139,12 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
 
       <div className="">
         {todoList.tasks.map((task) => (
-            <Card
-              key={task._id}
-              task={task}
-              deleteCard={() => deleteCard(task._id)}
-            />
-          ))}
+          <Card
+            key={task._id}
+            task={task}
+            deleteCard={() => deleteCard(task._id)}
+          />
+        ))}
       </div>
       <div className="py-1 taskInput">
         <input
