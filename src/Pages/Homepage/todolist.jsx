@@ -42,13 +42,12 @@ function todoList() {
         });
 
         if (response.ok) {
-          const newTodoList = await  response.json()
-          for(var i = 0; i <= newTodoList; i++)
-           {
-               console.log(result.tasks[i].taskName);
-           }
+          const newTodoList = await response.json();
+          for (var i = 0; i <= newTodoList; i++) {
+            console.log(result.tasks[i].taskName);
+          }
           console.log(newTodoList.title);
-          console.log(todoLists)
+          console.log(todoLists);
           setTodoLists([...todoLists, newTodoList]);
           setAddTodoListInputValue("");
         } else {
@@ -85,15 +84,18 @@ function todoList() {
     window.location.href = "/";
   };
   return (
-    <div className="justify-center flex-wrap">
-      <div className=" flex justify-center mt-4"> <button
+    <div className="justify-center flex-wrap m-4">
+      <div className=" flex justify-end mt-4">
+        {" "}
+        <button
           id="logoutButton"
           onClick={logoutHandler}
           className="ml-4 hover:bg-black hover:text-white hover:border-white border-2 bg-white text-black rounded p-2 font-bold"
         >
           Logout
-        </button></div>
-         
+        </button>
+      </div>
+
       <h1 className=" flex justify-center items-center text-white text-2xl p-8">
         Hello User!
       </h1>
@@ -108,7 +110,7 @@ function todoList() {
         <button
           id="addTodoListButton"
           onClick={addTodoListHandler}
-          className="hover:bg-black hover:text-white bg-white text-black rounded-r p-2 font-bold hover:border-white border-2" 
+          className="hover:bg-black hover:text-white bg-white text-black rounded-r p-2 font-bold hover:border-white border-2"
         >
           Add Todo
         </button>
