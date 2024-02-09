@@ -8,8 +8,10 @@ function todoList() {
   console.log(todoLists);
 
   const fetchTodoLists = async () => {
+    console.log(document.cookie);
+    const userId = document.cookie.split("=")[1];
     try {
-      const response = await fetch("http://localhost:8888/todolists", {
+      const response = await fetch("http://localhost:8888/todolists/"+userId, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +40,7 @@ function todoList() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ title: addTodoListInputValue }), // Provide the request body with the title
+          body: JSON.stringify({userId: document.cookie.split("=")[1], title: addTodoListInputValue }), // Provide the request body with the title
         });
 
         if (response.ok) {
