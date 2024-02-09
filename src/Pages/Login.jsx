@@ -36,6 +36,8 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
         },
         body: JSON.stringify(loginData),
       });
+      const {userId} = await response.json();
+      document.cookie = `userId=${userId}`;
 
       // Clear the form fields
       setLoginData({
