@@ -77,12 +77,8 @@ function todoList() {
     }
   };
   const logoutHandler = () => {
-    // Implement your logout logic here
-    // For example, clear any authentication tokens or session data
-    // and redirect the user to the login page
-    // This is a placeholder, replace it with your actual logout logic
-    localStorage.removeItem("token"); // or any other session storage
-    // Redirect to the login page or any other page you desire
+    localStorage.removeItem("userId"); // or any other session storage
+    
     window.location.href = "/";
   };
   return (
@@ -120,7 +116,6 @@ function todoList() {
 
       <div id="" className="flex justify-center flex-wrap">
         {todoLists.map((todoList) => (
-          // console.log(todoList)
           <TodoList
             key={todoList._id}
             titleId={todoList._id}

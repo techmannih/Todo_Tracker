@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = ({ isLoggedIn, setIsLoggedIn }) => {
@@ -13,7 +13,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/", { replace: true });
+      navigate("/home", { replace: true });
     }
   }, [isLoggedIn]);
 
@@ -25,10 +25,8 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
     e.preventDefault();
 
     try {
-      // Add logic to send the login data to your backend for authentication
+      // Add logic to send the login data to backend for authentication
       console.log("Login data submitted:", loginData);
-
-      // Make an API call to your server to handle user authentication
       const response = await fetch("http://localhost:8888/login", {
         method: "POST",
         headers: {
@@ -36,9 +34,8 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
         },
         body: JSON.stringify(loginData),
       });
-      const {userId} = await response.json();
-      document.cookie = `userId=${userId}`;
-
+      const { userId } = await response.json();
+      localStorage.setItem("userId", userId);
       // Clear the form fields
       setLoginData({
         fullName: "",
@@ -46,11 +43,8 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
         password: "",
       });
       if (response.ok) {
-        // Authentication successful, you can redirect or perform other actions
-        // Registration successful, display success message
         setSuccessMessage("User Logged In  successfully!");
 
-        // Clear success message and navigate after 2 seconds
         setTimeout(() => {
           setSuccessMessage(null);
           navigate("/home");
@@ -91,9 +85,11 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
     <div className="h-screen flex items-center justify-center">
       <div className="container-login bg-black flex p-8 m-8 text-white border-white border-2 rounded-xl">
         <div className="box">
-        {successMessage && (
-              <div className="text-green-500 text-center p-2">{successMessage}</div>
-            )}
+          {successMessage && (
+            <div className="text-green-500 text-center p-2">
+              {successMessage}
+            </div>
+          )}
           <div className="head">
             <span className=""></span>
             <div className="text-center py-6 text-xl font-bold">Log In</div>

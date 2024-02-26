@@ -14,10 +14,8 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
         setInputError("Task name cannot be empty");
         setTimeout(() => {
           setInputError(null);
-          // navigate("/");
         }, 1000);
         console.error("Task name cannot be empty");
-        // Add code to display an error message to the user, e.g., setErrorMessage("Task name cannot be empty");
         return;
       }
       const response = await fetch(
@@ -36,20 +34,16 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
         }
       );
 
-      // console.log(titleId);
       console.log(inputValue);
       console.log(setInputValue);
       if (response.ok) {
-        // const { todo, message } = await response.json();
         const newTask = await response.json();
-        // console.log("newTask:", newTask);
+
         console.log("tasks:", newTask.todo.tasks);
         setCardArray([...cardArray, newTask.todo.tasks]);
         setInputValue("");
-        // console.log("Todo:", todo);
-        // console.log("Message:", message);
       } else {
-        // Handle non-successful response here, e.g., log an error message
+        // Handle non-successful response 
         const errorResponse = await response.json();
         console.error(
           "Error:",
@@ -65,7 +59,7 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
         );
       }
     } catch (error) {
-      // Handle any other errors that might occur during the fetch or processing
+      // Handle any other errors during the fetch or processing
       console.error("An error occurred:", error);
       console.log("An error occurred:", error);
     }
@@ -86,9 +80,6 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
 
       if (response.ok) {
         console.log("Card deleted successfully");
-
-        // Assuming you want to update the state after a successful deletion
-        // This depends on the structure of your todoList.tasks, modify accordingly
         let updatedCardArray = [...todoList.tasks];
         const deletedTaskIndex = updatedCardArray.findIndex(
           (task) => task._id === id
