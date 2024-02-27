@@ -23,7 +23,6 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       // Add logic to send the login data to backend for authentication
       console.log("Login data submitted:", loginData);
@@ -34,8 +33,9 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
         },
         body: JSON.stringify(loginData),
       });
-      const { userId } = await response.json();
-      localStorage.setItem("userId", userId);
+      const responseBody = await response.json(); // Read response body only once
+  
+      localStorage.setItem("userId", responseBody.userId); // Use responseBody here
       // Clear the form fields
       setLoginData({
         fullName: "",
@@ -44,17 +44,16 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
       });
       if (response.ok) {
         setSuccessMessage("User Logged In  successfully!");
-
+  
         setTimeout(() => {
           setSuccessMessage(null);
           navigate("/home");
-        }, 1000);
+        }, 2000);
         setIsLoggedIn(true);
         console.log("User authenticated successfully!");
       } else {
         setIsLoggedIn(false);
         // Authentication failed, handle errors
-        const responseBody = await response.json();
         if (
           responseBody.errors &&
           (responseBody.errors.email ||
@@ -72,7 +71,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
           setTimeout(() => {
             setError1(null);
             navigate("/");
-          }, 1000);
+          }, 2000);
         }
       }
     } catch (error) {
@@ -80,6 +79,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
       setIsLoggedIn(false);
     }
   };
+  
 
   return (
     <div className="h-screen flex items-center justify-center">

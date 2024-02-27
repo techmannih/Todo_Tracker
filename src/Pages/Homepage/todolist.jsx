@@ -8,16 +8,20 @@ function todoList() {
   console.log(todoLists);
 
   const fetchTodoLists = async () => {
-    console.log(document.cookie);
-    const userId = document.cookie.split("=")[1];
+    const userId = localStorage.getItem("userId"); // Retrieve userId from localStorage
+    if (!userId) {
+      console.error("User ID not found in localStorage");
+      return;
+    }
+  
     try {
-      const response = await fetch("http://localhost:8888/todolists/"+userId, {
+      const response = await fetch(`http://localhost:8888/todolists/${userId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
-
+  
       if (response.ok) {
         const todoListsData = await response.json();
         setTodoLists(todoListsData.todo);
@@ -29,10 +33,17 @@ function todoList() {
       console.error("Error fetching todo lists:", error);
     }
   };
+  
   useEffect(() => {
     fetchTodoLists();
   }, []);
   const addTodoListHandler = async () => {
+    const userId = localStorage.getItem("userId"); // Retrieve userId from localStorage
+    if (!userId) {
+      console.error("User ID not found in localStorage");
+      return;
+    }
+  
     if (addTodoListInputValue.trim() !== "") {
       try {
         const response = await fetch("http://localhost:8888/todolists", {
@@ -40,26 +51,26 @@ function todoList() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({userId: document.cookie.split("=")[1], title: addTodoListInputValue }), // Provide the request body with the title
+          body: JSON.stringify({ userId, title: addTodoListInputValue }), // Include userId in the request body
         });
-
+  
         if (response.ok) {
           const newTodoList = await response.json();
-          for (var i = 0; i <= newTodoList; i++) {
-            console.log(result.tasks[i].taskName);
-          }
           console.log(newTodoList.title);
           console.log(todoLists);
           setTodoLists([...todoLists, newTodoList]);
           setAddTodoListInputValue("");
         } else {
-          console.error("Error adding todo list:", response.statusText);
+          const errorMessage = await response.text(); // Get error message from response body
+          console.error("Error adding todo list:", errorMessage);
         }
       } catch (error) {
         console.error("Error adding todo list:", error);
       }
     }
   };
+  
+  
   const deleteTodoList = async (id) => {
     try {
       const response = await fetch(`http://localhost:8888/todolist/${id}`, {
