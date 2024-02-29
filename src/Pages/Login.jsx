@@ -26,7 +26,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
     try {
       // Add logic to send the login data to backend for authentication
       console.log("Login data submitted:", loginData);
-      const response = await fetch("http://localhost:8888/login", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

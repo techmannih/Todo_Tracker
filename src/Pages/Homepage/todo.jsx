@@ -19,7 +19,7 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
         return;
       }
       const response = await fetch(
-        `http://localhost:8888/todolist/${titleId}/task`,
+        `${import.meta.env.VITE_BACKEND_URL}com/todolist/${titleId}/task`,
         {
           method: "PUT",
           headers: {
@@ -69,7 +69,7 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
       console.log("Deleting card with ID:", id);
 
       const response = await fetch(
-        `http://localhost:8888/todolist/task/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/todolist/task/${id}`,
         {
           method: "DELETE",
           headers: {

@@ -15,7 +15,7 @@ function todoList() {
     }
   
     try {
-      const response = await fetch(`http://localhost:8888/todolists/${userId}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/todolists/${userId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +46,7 @@ function todoList() {
   
     if (addTodoListInputValue.trim() !== "") {
       try {
-        const response = await fetch("http://localhost:8888/todolists", {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/todolists`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -73,7 +73,7 @@ function todoList() {
   
   const deleteTodoList = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8888/todolist/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/todolist/${id}`, {
         method: "DELETE",
       });
 
