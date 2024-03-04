@@ -42,7 +42,7 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
         console.log("tasks:", newTask.todo.tasks);
         setCardArray([...cardArray, newTask.todo.tasks]);
         setTimeout(() => {
-          location.reload(); // reload the page
+          location.reload("/"); // reload the page
       }, 1000);
         setInputValue("");
       } else {
@@ -92,7 +92,7 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
           updatedCardArray.splice(deletedTaskIndex, 1);
           setCardArray(updatedCardArray);
           setTimeout(() => {
-            location.reload(); // reload the page
+            location.reload("/"); // reload the page
         }, 1000);
           console.log("Updated card array:", updatedCardArray);
         } else {

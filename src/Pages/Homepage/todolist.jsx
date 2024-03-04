@@ -89,7 +89,6 @@ function todoList() {
   };
   const logoutHandler = () => {
     localStorage.removeItem("userId"); // or any other session storage
-    
     window.location.href = "/";
   };
   return (
