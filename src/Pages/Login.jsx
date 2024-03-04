@@ -25,7 +25,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
     e.preventDefault();
     try {
       // Add logic to send the login data to backend for authentication
-      console.log("Login data submitted:", loginData);
+      // console.log("Login data submitted:", loginData);
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
         method: "POST",
         headers: {
@@ -50,7 +50,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
           navigate("/home");
         }, 2000);
         setIsLoggedIn(true);
-        console.log("User authenticated successfully!");
+        // console.log("User authenticated successfully!");
       } else {
         setIsLoggedIn(false);
         // Authentication failed, handle errors

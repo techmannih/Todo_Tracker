@@ -5,8 +5,7 @@ import "../Home.css";
 function todoList() {
   const [todoLists, setTodoLists] = useState([]);
   const [addTodoListInputValue, setAddTodoListInputValue] = useState("");
-  console.log(todoLists);
-
+ 
   const fetchTodoLists = async () => {
     const userId = localStorage.getItem("userId"); // Retrieve userId from localStorage
     if (!userId) {
@@ -25,7 +24,7 @@ function todoList() {
       if (response.ok) {
         const todoListsData = await response.json();
         setTodoLists(todoListsData.todo);
-        console.log("Fetch all todo lists:", todoListsData.todo);
+        // console.log("Fetch all todo lists:", todoListsData.todo);
       } else {
         console.error("Error fetching todo lists:", response.statusText);
       }
@@ -56,8 +55,8 @@ function todoList() {
   
         if (response.ok) {
           const newTodoList = await response.json();
-          console.log(newTodoList.title);
-          console.log(todoLists);
+          // console.log(newTodoList.title);
+          // console.log(todoLists);
           setTodoLists([...todoLists, newTodoList]);
           setAddTodoListInputValue("");
         } else {

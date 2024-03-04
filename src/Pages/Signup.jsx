@@ -21,7 +21,7 @@ const Signup = () => {
 
     try {
       // Add logic to send the form data to your backend for user registration
-      console.log("Form data submitted:", formData);
+      // console.log("Form data submitted:", formData);
 
       // Make an API call to your server to handle user registration
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/signup`, {
@@ -47,8 +47,8 @@ const Signup = () => {
           setSuccessMessage(null);
           navigate("/");
         }, 1000);
-        console.log("User registered successfully!");
-        console.log(formData);
+        // console.log("User registered successfully!");
+        // console.log(formData);
       } else {
         // Registration failed, handle errors
         console.error("Registration failed:", response.statusText);

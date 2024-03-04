@@ -34,12 +34,12 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
         }
       );
 
-      console.log(inputValue);
-      console.log(setInputValue);
+      // console.log(inputValue);
+      // console.log(setInputValue);
       if (response.ok) {
         const newTask = await response.json();
 
-        console.log("tasks:", newTask.todo.tasks);
+        // console.log("tasks:", newTask.todo.tasks);
         setCardArray([...cardArray, newTask.todo.tasks]);
         setTimeout(() => {
           location.reload("/"); // reload the page
@@ -69,7 +69,7 @@ function TodoList({ titleId, todoList, deleteTodoList }) {
   };
   const deleteCard = async (id) => {
     try {
-      console.log("Deleting card with ID:", id);
+      // console.log("Deleting card with ID:", id);
 
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/todolist/task/${id}`,
